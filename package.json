@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index",
     "dev": "nodemon index",
-    "seed": "node utils/seed"
+    "seed": "node utils/seed/seeding"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,8 @@
   "homepage": "https://github.com/SiddySixsmith/Social-Network-API#readme",
   "dependencies": {
     "express": "^4.17.2",
-    "mongoose": "^5.12.12"
+    "mongoose": "^5.12.12",
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.9"

@@ -1,35 +1,44 @@
 const { Schema, model } = require("mongoose");
+const validator = require("validator");
 
-const userSchema = new Schema({
-  username: {
-    type: String,
-    unique: true,
-    required: true,
-    trim: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    validate: {
-      validator: () => Promise.resolve(false),
-      message: "Email validation failed",
+const userSchema = new Schema(
+  {
+    username: {
+      type: String,
+      unique: true,
+      required: true,
+      trim: true,
     },
+    email: {
+      type: String,
+      required: [true, "Email required"],
+      unique: true,
+      validate: {
+        validator: validator.isEmail,
+        message: "Please enter a valid email",
+        isAsync: false,
+      },
+    },
+    thoughts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Thought",
+      },
+    ],
+    friends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
   },
-  thoughts: {
-    type: Schema.Types.ObjectId,
-    ref: "Thought",
-  },
-  friends: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-  },
-  toJSON: {
-    virtuals: true,
-  },
-  id: false,
-});
-
+  {
+    toJSON: {
+      getters: true,
+      virtuals: true,
+    },
+  }
+);
 userSchema.virtual("friendCount").get(function () {
   return this.friends.length;
 });
