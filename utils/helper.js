@@ -1,3 +1,4 @@
+const moment = require("moment");
 const formatDate = (date) => {
   moment(date).format("MMMM Do YYYY, h:mm a");
 };
